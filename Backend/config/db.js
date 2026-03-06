@@ -13,7 +13,15 @@ const config = {
 };
 
 const pool = new sql.ConnectionPool(config);
-const poolConnect = pool.connect();
+
+// Koneksi ke database saat aplikasi dijalankan
+const poolConnect = pool.connect()
+    .then(() => {
+        console.log('✅ Sukses terhubung ke database SQL Server');
+    })
+    .catch((err) => {
+        console.error('❌ Gagal terhubung ke database SQL Server:', err.message);
+    });
 
 module.exports = {
     sql,
