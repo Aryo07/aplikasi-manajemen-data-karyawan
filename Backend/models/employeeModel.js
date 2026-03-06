@@ -68,7 +68,11 @@ class EmployeeModel {
                 WHERE EmployeeID=@id
             `);
 
-        return { message: "Employee deleted", employeeID: result.recordset[0]?.EmployeeID || id };
+        if (!result.recordset[0]) {
+            return null;
+        }
+
+        return { message: "Employee deleted", employeeID: result.recordset[0].EmployeeID };
     }
 }
 
