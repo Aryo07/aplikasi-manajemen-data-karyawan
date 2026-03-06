@@ -1,0 +1,117 @@
+<div class="fade-in">
+
+  <!-- Alert Notification -->
+  <div class="alert-container" ng-if="alert">
+    <div class="alert" ng-class="alert.type === 'success' ? 'alert-success' : 'alert-danger'">
+      <span ng-if="alert.type === 'success'">✅</span>
+      <span ng-if="alert.type === 'danger'">❌</span>
+      {{ alert.msg }}
+    </div>
+  </div>
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <h1>
+      Daftar Karyawan
+      <small>Manajemen data seluruh karyawan perusahaan</small>
+    </h1>
+    <a href="#!/create" class="btn btn-primary" id="btn-add-employee">
+      <span>＋</span> Tambah Karyawan
+    </a>
+  </div>
+
+  <!-- Stats Row -->
+  <div class="stats-row" ng-if="!loading">
+    <div class="stat-card">
+      <div class="stat-icon blue">👥</div>
+      <div class="stat-info">
+        <div class="label">Employee Count</div>
+        <div class="value">{{ totalEmployees }}</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon purple">🏷️</div>
+      <div class="stat-info">
+        <div class="label">Total Positions</div>
+        <div class="value">{{ totalPositions }}</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon green">💰</div>
+      <div class="stat-info">
+        <div class="label">Average Salary</div>
+        <div class="value" style="font-size:1.1rem">{{ formatSalary(avgSalary) }}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table Card -->
+  <div class="card">
+    <div class="card-header">
+      <h2>📋 Data Karyawan</h2>
+      <div class="search-bar">
+        <span class="search-icon">🔍</span>
+        <input
+          type="text"
+          class="form-control"
+          id="search-employee"
+          ng-model="searchQuery"
+          placeholder="Cari nama / jabatan..."
+        />
+      </div>
+    </div>
+
+    <!-- Loading State -->
+    <div class="loading-state" ng-if="loading">
+      <div class="spinner"></div>
+      <p>Memuat data karyawan…</p>
+    </div>
+
+    <!-- Table -->
+    <div class="table-wrapper" ng-if="!loading">
+      <table id="employee-table" ng-if="filteredEmployees().length > 0">
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>Nama</th>
+            <th>Jabatan</th>
+            <th>Gaji</th>
+            <th>Terdaftar</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="emp in filteredEmployees() track by emp.EmployeeID">
+            <td class="td-number">{{ $index + 1 }}</td>
+            <td class="td-name">{{ emp.Name }}</td>
+            <td><span class="badge-position">{{ emp.Position }}</span></td>
+            <td class="td-salary">{{ formatSalary(emp.Salary) }}</td>
+            <td class="td-date">{{ formatDate(emp.CreatedAt) }}</td>
+            <td>
+              <div class="actions-cell">
+                <a
+                  href="#!/edit/{{ emp.EmployeeID }}"
+                  class="btn btn-edit"
+                  id="btn-edit-{{ emp.EmployeeID }}"
+                >✏️ Edit</a>
+                <button
+                  class="btn btn-delete"
+                  id="btn-delete-{{ emp.EmployeeID }}"
+                  ng-click="deleteEmployee(emp)"
+                >🗑️ Hapus</button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Empty State -->
+      <div class="empty-state" ng-if="filteredEmployees().length === 0 && !loading">
+        <div class="empty-icon">📭</div>
+        <p ng-if="searchQuery">Tidak ada karyawan yang cocok dengan "<strong>{{ searchQuery }}</strong>"</p>
+        <p ng-if="!searchQuery">Belum ada data karyawan. <a href="#!/create">Tambah karyawan pertama →</a></p>
+      </div>
+    </div>
+  </div>
+
+</div>

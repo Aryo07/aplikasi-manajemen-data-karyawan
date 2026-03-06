@@ -1,0 +1,106 @@
+<div class="fade-in">
+
+  <!-- Back Link -->
+  <a href="#!/" class="back-link" id="back-to-list">
+    ← Kembali ke Daftar Karyawan
+  </a>
+
+  <!-- Alert Notification -->
+  <div class="alert-container" ng-if="alert">
+    <div class="alert" ng-class="alert.type === 'success' ? 'alert-success' : 'alert-danger'">
+      <span ng-if="alert.type === 'success'">✅</span>
+      <span ng-if="alert.type === 'danger'">❌</span>
+      {{ alert.msg }}
+    </div>
+  </div>
+
+  <!-- Form Card -->
+  <div class="card form-card">
+    <div class="card-header">
+      <h2>
+        <span ng-if="!isEdit">📝 Form Tambah Karyawan</span>
+        <span ng-if="isEdit">📝 Form Edit Karyawan</span>
+      </h2>
+    </div>
+
+    <!-- Loading (Edit Mode) -->
+    <div class="loading-state" ng-if="loading">
+      <div class="spinner"></div>
+      <p>Memuat data karyawan…</p>
+    </div>
+
+    <div class="card-body" ng-if="!loading">
+      <form id="employee-form" name="employeeForm" ng-submit="submit()" novalidate>
+
+        <!-- Nama -->
+        <div class="form-group">
+          <label class="form-label" for="input-name">Nama Karyawan <span style="color: var(--accent-danger)">*</span></label>
+          <input
+            type="text"
+            id="input-name"
+            class="form-control"
+            ng-class="{ 'is-invalid': errors.name }"
+            ng-model="employee.name"
+            placeholder="Contoh: Budi Santoso"
+            autocomplete="off"
+          />
+          <span class="invalid-feedback" ng-if="errors.name">{{ errors.name }}</span>
+        </div>
+
+        <!-- Posisi -->
+        <div class="form-group">
+          <label class="form-label" for="input-position">Jabatan / Posisi <span style="color: var(--accent-danger)">*</span></label>
+          <input
+            type="text"
+            id="input-position"
+            class="form-control"
+            ng-class="{ 'is-invalid': errors.position }"
+            ng-model="employee.position"
+            placeholder="Contoh: Software Engineer"
+            autocomplete="off"
+          />
+          <span class="invalid-feedback" ng-if="errors.position">{{ errors.position }}</span>
+        </div>
+
+        <!-- Gaji -->
+        <div class="form-group">
+          <label class="form-label" for="input-salary">Gaji (IDR) <span style="color: var(--accent-danger)">*</span></label>
+          <input
+            type="number"
+            id="input-salary"
+            class="form-control"
+            ng-class="{ 'is-invalid': errors.salary }"
+            ng-model="employee.salary"
+            placeholder="Contoh: 8000000"
+            min="1"
+            step="1"
+          />
+          <span class="invalid-feedback" ng-if="errors.salary">{{ errors.salary }}</span>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="form-actions">
+          <button
+            type="submit"
+            class="btn btn-primary"
+            id="btn-submit"
+            ng-disabled="submitting"
+          >
+            <span ng-if="submitting">⏳ Menyimpan…</span>
+            <span ng-if="!submitting && !isEdit">💾 Simpan Karyawan</span>
+            <span ng-if="!submitting && isEdit">💾 Perbarui Karyawan</span>
+          </button>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            id="btn-cancel"
+            ng-click="cancel()"
+            ng-disabled="submitting"
+          >Batal</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+</div>

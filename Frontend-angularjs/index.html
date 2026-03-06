@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="id" ng-app="employeeApp">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Aplikasi manajemen data karyawan perusahaan — CRUD berbasis AngularJS dan Node.js" />
+  <title>Employee Management System</title>
+
+  <!-- AngularJS 1.8 CDN -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.3/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.3/angular-route.min.js"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- App Styles -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ===== Main Content ===== -->
+  <main class="main-content">
+    <!-- AngularJS router outlet -->
+    <div ng-view></div>
+  </main>
+
+  <!-- ===== App Scripts ===== -->
+  <!-- Module & Routes -->
+  <script src="app.js"></script>
+  <!-- Service -->
+  <script src="services/employeeService.js"></script>
+  <!-- Controllers -->
+  <script src="controllers/employeeListCtrl.js"></script>
+  <script src="controllers/employeeFormCtrl.js"></script>
+
+</body>
+</html>
