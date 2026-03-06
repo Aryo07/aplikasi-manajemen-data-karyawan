@@ -9,30 +9,37 @@
 
   function employeeService($http) {
     var BASE_URL = 'http://localhost:3000/api/employees';
+    
+    // Konfigurasi header untuk autentikasi
+    var config = {
+      headers: {
+        'x-api-key': 'secret123'
+      }
+    };
 
     // GET semua karyawan
     this.getAll = function () {
-      return $http.get(BASE_URL);
+      return $http.get(BASE_URL, config);
     };
 
     // GET karyawan berdasarkan ID
     this.getById = function (id) {
-      return $http.get(BASE_URL + '/' + id);
+      return $http.get(BASE_URL + '/' + id, config);
     };
 
     // POST tambah karyawan baru
     this.create = function (data) {
-      return $http.post(BASE_URL, data);
+      return $http.post(BASE_URL, data, config);
     };
 
     // PUT update karyawan
     this.update = function (id, data) {
-      return $http.put(BASE_URL + '/' + id, data);
+      return $http.put(BASE_URL + '/' + id, data, config);
     };
 
     // DELETE hapus karyawan
     this.remove = function (id) {
-      return $http.delete(BASE_URL + '/' + id);
+      return $http.delete(BASE_URL + '/' + id, config);
     };
   }
 })();
